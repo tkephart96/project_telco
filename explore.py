@@ -1,3 +1,6 @@
+'''Explore Telco data'''
+
+########## IMPORTS ##########
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,11 +11,33 @@ from scipy import stats
 ### focused exploration ###
 
 def cat_chi(train, target, cat_var):
+    """
+    The function `cat_chi` calculates the chi-squared test statistic and p-value for a categorical
+    variable in relation to a target variable.
+    
+    :param train: `train` is a pandas DataFrame containing the training data. It is assumed that the
+    `train` DataFrame contains a column for the target variable and a column for the categorical
+    variable of interest
+    :param target: The target variable is the variable that we are trying to predict or explain using
+    the other variables in the dataset. It is also known as the dependent variable. In the context of
+    this function, it is the variable that we are trying to see if it is associated with the categorical
+    variable
+    :param cat_var: The categorical variable for which we want to calculate the chi-squared test
+    """
     observed = pd.crosstab(train[cat_var], train[target])
     chi2, p, degf, expected = stats.chi2_contingency(observed)
     print(f'Chi2: {chi2}, p-value: {p}')
 
 def explore_cat(train, target, cat_var):
+    """
+    The function explores the relationship between a categorical variable and a target variable in a
+    given dataset using chi-squared test and barplot visualization.
+    
+    :param train: a pandas DataFrame containing the training data
+    :param target: The target variable in the dataset, which is the variable we are trying to predict or
+    explain
+    :param cat_var: The categorical variable that we want to explore and analyze
+    """
     observed = pd.crosstab(train[cat_var], train[target])
     chi2, p, degf, expected = stats.chi2_contingency(observed)
     print(f'Chi2: {chi2}, p-value: {p}')
@@ -22,6 +47,19 @@ def explore_cat(train, target, cat_var):
     plt.show(p)
 
 def explore_int(train, target, cat_var):
+    """
+    The function explores the relationship between a categorical variable and a target variable in a
+    training dataset using chi-squared test and barplot visualization.
+    
+    :param train: The training dataset that contains the independent variable(s) and the dependent
+    variable
+    :param target: The target variable is the variable we are trying to predict or explain in our
+    analysis. It is the dependent variable in a regression or classification problem. In this function,
+    it is used to create a cross-tabulation table and a bar plot to explore the relationship between the
+    target variable and the categorical variable
+    :param cat_var: The categorical variable that we want to explore and analyze in relation to the
+    target variable
+    """
     observed = pd.crosstab(train[target], train[cat_var])
     chi2, p, degf, expected = stats.chi2_contingency(observed)
     print(f'Chi2: {chi2}, p-value: {p}')
@@ -31,6 +69,15 @@ def explore_int(train, target, cat_var):
     plt.show(p)
 
 def baseline(target):
+    """
+    The function calculates and prints the accuracy of a baseline model that always predicts the most
+    frequent class in the target variable.
+    
+    :param target: The "target" parameter is likely a Pandas Series or DataFrame column that contains
+    the true labels or values that we are trying to predict or classify. The "baseline" function appears
+    to calculate the accuracy of a simple baseline model that always predicts the most common value in
+    the "target" column
+    """
     print(f'Baseline: {round(((target==target.value_counts().idxmax()).mean())*100,2)}% Accuracy')
 
 ### broad exploration ###
