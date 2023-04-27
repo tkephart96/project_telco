@@ -25,10 +25,10 @@ My initial hypothesis is that drivers of churn will be elements that have dissat
     * Answer the following initial questions
     * Is Churn independent from payment type?
     * Is Churn independent from internet Service type?
-    * Is Churn independent from tech support?
-    * Is Churn independent from a customer having at least one internet package?
+    * Is Churn independent from paperless billing?
+    * Is there a difference in churn based on monthly charges?
 * Develop a Model to predict if a customer will churn
-    * Use drivers identified in explore to build predictive models of different types
+    * Use drivers identified in explore to help build predictive models of different types
     * Evaluate models on train and validate data
     * Select the best model based on highest accuracy
     * Evaluate the best model on test data
@@ -39,7 +39,7 @@ My initial hypothesis is that drivers of churn will be elements that have dissat
 | Feature               | Values                      | Definition                                                |
 | :-------------------- | --------------------------- | :-------------------------------------------------------- |
 | customer_id           | Alpha-numeric               | Unique ID for each customer                               |
-| gender                | Female=1/Male=0             | Gender of customer                                        |
+| gender                | Female/Male                 | Gender of customer                                        |
 | senior_citizen        | True=1/False=0              | Whether customer is a senior citizen or not               |
 | partner               | True=1/False=0              | True=1/False=0, whether customer has a partner or not     |
 | dependents            | True=1/False=0              | True=1/False=0, whether customer has dependents or not    |
@@ -60,33 +60,35 @@ My initial hypothesis is that drivers of churn will be elements that have dissat
 | tenure                | Numeric                     | Number of months customer has stayed                      |
 | churn (target)        | True=1/False=0              | Whether or not the customer has churned                   |
 | Additional Features   | True=1/False=0              | Encoded values for categorical data                       |
-| has_internet_packages | True=1/False=0              | Whether customer has at least 1 internet package          |
 
 ## Steps to Reproduce
 
 1) Clone this repo
 2) If you have access to the Codeup MySQL DB:
-    - Save **env.py** in the repo w/ `user`, `password`, and `host` variables
-    - Run notebook
+   - Save **env.py** in the repo w/ `user`, `password`, and `host` variables
+   - Run notebook
 3) If you don't have access:
-    - Request access from Codeup
-    - Do step 2
+   - Request access from Codeup
+   - Do step 2
 
 # Conclusions
 
 ### Takeaways and Key Findings
 
 * Payment type was found to be a driver of churn
-    - Electronic check being the most common among churn
-* Internet service type was found to be a driver of churn
-    - Fiber optic being the most common among churn
-* Tech support was found to be a driver of churn
-    - No tech support being the most common among churn
-    - With more time I could check if not having tech support increases churn for certain internet services and packages
-* Having an internet package was found to be a driver of churn
-    - If given more time I could investigate why without making assumptions
+  - Electronic check being the most common among churn
+* Fiber optic internet being a driver of churn was surprising considering it has faster internet speeds
+* Paperless billing was found to be a driver of churn
+    - Having it enabled was the most common among churn
+* Monthly charges was found to be a driver of churn, higher charges for churn
 * Gender and phone service were found to not be a driver of churn
 
 ### Recommendations
+
 * Check with engineers to see if there are frequent issues with Fiber optic internet
 * Check with tech support technicians and see what can be done for customers to choose tech support as an internet package
+
+### Next Steps
+
+* With more time I could check if not having tech support increases churn for certain internet services and packages
+* If given more time I could investigate why without making assumptions
