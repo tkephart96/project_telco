@@ -306,7 +306,7 @@ def plot_cat_by_target(train, target, cat_var):
 
 ## Bivariate Quant
 
-def plot_swarm(train, target, quant_var):
+def plot_swarm(train, target, quant_var,size=3):
     """
     The function plots a swarmplot with a horizontal line indicating the mean value of a quantitative
     variable for a given target variable.
@@ -318,7 +318,7 @@ def plot_swarm(train, target, quant_var):
     :return: the plot object `p`.
     """
     average = train[quant_var].mean()
-    p = sns.swarmplot(data=train, x=target, y=quant_var, color='lightgray')
+    p = sns.swarmplot(data=train, x=target, y=quant_var, size=size, marker='.', color='black')
     p = plt.title(quant_var)
     p = plt.axhline(average, ls='--', color='black')
     return p
@@ -365,8 +365,8 @@ def compare_means(train, target, quant_var, alt_hyp='two-sided'):
     (target). The alternative hypothesis (alt_hyp) can be specified as either 'two-sided' (default),
     'less', or 'greater'.
     """
-    x = train[train[target]==0][quant_var]
-    y = train[train[target]==1][quant_var]
+    x = train[train[target]==1][quant_var]
+    y = train[train[target]==0][quant_var]
     return stats.mannwhitneyu(x, y, use_continuity=True, alternative=alt_hyp)
 
 

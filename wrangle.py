@@ -55,11 +55,11 @@ def wrangle_telco_data():
                                     ,'streaming_movies','contract_type','internet_service_type'
                                     ,'payment_type']], dummy_na=False, drop_first=True)
     df = pd.concat([df, dummy_df], axis=1)
-    # adding features
-    df['internet_packages'] = df.online_security_Yes + df.online_backup_Yes + df.device_protection_Yes + df.tech_support_Yes + df.streaming_tv_Yes + df.streaming_movies_Yes
-    df['has_internet_package'] = 0
-    df.loc[df.internet_packages>=1,'has_internet_package'] = 1
-    df = df.drop(columns=['internet_packages'])
+    # # adding features
+    # df['internet_packages'] = df.online_security_Yes + df.online_backup_Yes + df.device_protection_Yes + df.tech_support_Yes + df.streaming_tv_Yes + df.streaming_movies_Yes
+    # df['has_internet_package'] = 0
+    # df.loc[df.internet_packages>=1,'has_internet_package'] = 1
+    # df = df.drop(columns=['internet_packages'])
     print('data cleaned and prepped')
     # return the dataframe to the calling code
     return df
