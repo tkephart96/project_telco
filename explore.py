@@ -83,7 +83,7 @@ def explore_int(train, target, cat_var):
     chi2, p, degf, expected = stats.chi2_contingency(observed)
     print(f'Chi2: {chi2}, p-value: {p}')
     plt.figure(figsize=(4,4))
-    p = sns.barplot(cat_var, target, data=train, alpha=.8, color='red',orient='h')
+    p = sns.barplot(target, cat_var, data=train, alpha=.8, color='red',orient='h')
     overall_rate = train[target].mean()
     p = plt.axvline(overall_rate, ls='--', color='gray')
     plt.show(p)
@@ -360,7 +360,7 @@ def plot_boxen(train, target, quant_var):
     not necessary to return `p` since it is not being used outside of the function
     """
     average = train[quant_var].mean()
-    p = sns.boxenplot(data=train, x=target, y=quant_var, color='red')
+    p = sns.boxenplot(data=train, x=target, y=quant_var, hue=target, color='red')
     p = plt.title(quant_var)
     p = plt.axhline(average, ls='--', color='black')
     return p
