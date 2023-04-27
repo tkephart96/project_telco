@@ -16,11 +16,11 @@ def wrangle_telco_data():
     filename = "telco.csv"
     # find if data is cached
     if os.path.isfile(filename):
-        print('csv file found and loaded')
+        # print('csv file found and loaded')
         df = pd.read_csv(filename)
     # cache data if not found
     else:
-        print('creating df and exporting csv')
+        # print('creating df and exporting csv')
         # read the SQL query into a dataframe
         df = pd.read_sql(
             '''
@@ -60,7 +60,7 @@ def wrangle_telco_data():
     # df['has_internet_package'] = 0
     # df.loc[df.internet_packages>=1,'has_internet_package'] = 1
     # df = df.drop(columns=['internet_packages'])
-    print('data cleaned and prepped')
+    # print('data cleaned and prepped')
     # return the dataframe to the calling code
     return df
 
@@ -84,14 +84,14 @@ def split_data(df, strat, seed=42, test=.2, validate=.25):
     validation. It is set to 0.25, which means that 25% of the data will be used for validation
     :return: three dataframes: train, validate, and test.
     """
-    print('data split')
+    # print('data split')
     st = [strat]
     train_validate, test = train_test_split(df, test_size=test, random_state=seed, stratify=df[st])
     train, validate = train_test_split(train_validate, 
                                         test_size=validate, 
                                         random_state=seed, 
                                         stratify=train_validate[st])
-    print(f'train -> {train.shape}; {round(len(train)*100/len(df),2)}%')
-    print(f'validate -> {validate.shape}; {round(len(validate)*100/len(df),2)}%')
-    print(f'test -> {test.shape}; {round(len(test)*100/len(df),2)}%')
+    # print(f'train -> {train.shape}; {round(len(train)*100/len(df),2)}%')
+    # print(f'validate -> {validate.shape}; {round(len(validate)*100/len(df),2)}%')
+    # print(f'test -> {test.shape}; {round(len(test)*100/len(df),2)}%')
     return train, validate, test

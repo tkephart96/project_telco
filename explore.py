@@ -8,6 +8,22 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from scipy import stats
 
+### bars ###
+
+# fig, ax = plt.subplots()
+# def gradient_bars(bars):
+#     grad = np.atleast_2d(np.linspace(0,1,256)).T
+#     ax = bars[0].axes
+#     lim = ax.get_xlim()+ax.get_ylim()
+#     for bar in bars:
+#         bar.set_zorder(1)
+#         bar.set_facecolor("none")
+#         x,y = bar.get_xy()
+#         w, h = bar.get_width(), bar.get_height()
+#         ax.imshow(grad, extent=[x,x+w,y,y+h], aspect="auto", zorder=0)
+#     ax.axis(lim)
+
+
 ### focused exploration ###
 
 def cat_chi(train, target, cat_var):
@@ -41,10 +57,13 @@ def explore_cat(train, target, cat_var):
     observed = pd.crosstab(train[cat_var], train[target])
     chi2, p, degf, expected = stats.chi2_contingency(observed)
     print(f'Chi2: {chi2}, p-value: {p}')
-    p = sns.barplot(target, cat_var, data=train, alpha=.8, color='lightseagreen')
+    plt.figure(figsize=(4,4))
+    # ax.
+    # gradient_bars(ax.sns.barplot(cat_var, target, data=train, alpha=.8))
+    p = sns.barplot(target, cat_var, data=train, alpha=.8, color='red')
     overall_rate = train[target].mean()
-    p = plt.axvline(overall_rate, ls='--', color='gray')
-    plt.show(p)
+    plt.axvline(overall_rate, ls='--', color='gray')
+    plt.show()
 
 def explore_int(train, target, cat_var):
     """
@@ -63,9 +82,10 @@ def explore_int(train, target, cat_var):
     observed = pd.crosstab(train[target], train[cat_var])
     chi2, p, degf, expected = stats.chi2_contingency(observed)
     print(f'Chi2: {chi2}, p-value: {p}')
-    p = sns.barplot(cat_var, target, data=train, alpha=.8, color='lightseagreen')
+    plt.figure(figsize=(4,4))
+    p = sns.barplot(cat_var, target, data=train, alpha=.8, color='red',orient='h')
     overall_rate = train[target].mean()
-    p = plt.axhline(overall_rate, ls='--', color='gray')
+    p = plt.axvline(overall_rate, ls='--', color='gray')
     plt.show(p)
 
 def baseline(target):
@@ -155,7 +175,7 @@ def explore_univariate_categorical(train, cat_var):
     """
     frequency_table = freq_table(train, cat_var)
     plt.figure(figsize=(2,2))
-    sns.barplot(x=cat_var, y='Count', data=frequency_table, color='lightseagreen')
+    sns.barplot(x=cat_var, y='Count', data=frequency_table, color='red')
     plt.title(cat_var)
     plt.show()
     print(frequency_table)
@@ -170,18 +190,18 @@ def explore_univariate_quant(train, quant_var):
     :return: two values: the plots for the histogram and boxplot of the specified quantitative variable,
     and the descriptive statistics of that variable.
     """
-    descriptive_stats = train[quant_var].describe()
+    # descriptive_stats = train[quant_var].describe()
     plt.figure(figsize=(8,2))
 
     p = plt.subplot(1, 2, 1)
-    p = plt.hist(train[quant_var], color='lightseagreen')
+    p = plt.hist(train[quant_var], color='red')
     p = plt.title(quant_var)
 
     # second plot: box plot
     p = plt.subplot(1, 2, 2)
     p = plt.boxplot(train[quant_var])
     p = plt.title(quant_var)
-    return p, descriptive_stats
+    return p#, descriptive_stats
 
 def freq_table(train, cat_var):
     """
@@ -245,17 +265,17 @@ def explore_bivariate_quant(train, target, quant_var):
     :param quant_var: The quantitative variable that we want to explore in relation to the target
     variable
     """
-    print(quant_var, "\n____________________\n")
-    descriptive_stats = train.groupby(target)[quant_var].describe()
+    print(quant_var, "\n____________________")
+    # descriptive_stats = train.groupby(target)[quant_var].describe()
     average = train[quant_var].mean()
-    mann_whitney = compare_means(train, target, quant_var)
+    compare_means(train, target, quant_var)
+    # print(descriptive_stats, "\n")
+    # print("\nMann-Whitney Test:\n", f'stat = {stat}, p = {p}')
+    print("____________________")
     plt.figure(figsize=(4,4))
     boxen = plot_boxen(train, target, quant_var)
-    swarm = plot_swarm(train, target, quant_var)
+    # swarm = plot_swarm(train, target, quant_var)
     plt.show()
-    print(descriptive_stats, "\n")
-    print("\nMann-Whitney Test:\n", mann_whitney)
-    print("\n____________________\n")
 
 ## Bivariate Categorical
 
@@ -298,7 +318,7 @@ def plot_cat_by_target(train, target, cat_var):
     in the dataset.
     """
     p = plt.figure(figsize=(2,2))
-    p = sns.barplot(cat_var, target, data=train, alpha=.8, color='lightseagreen')
+    p = sns.barplot(cat_var, target, data=train, alpha=.8, color='red')
     overall_rate = train[target].mean()
     p = plt.axhline(overall_rate, ls='--', color='gray')
     return p
@@ -340,7 +360,7 @@ def plot_boxen(train, target, quant_var):
     not necessary to return `p` since it is not being used outside of the function
     """
     average = train[quant_var].mean()
-    p = sns.boxenplot(data=train, x=target, y=quant_var, color='lightseagreen')
+    p = sns.boxenplot(data=train, x=target, y=quant_var, color='red')
     p = plt.title(quant_var)
     p = plt.axhline(average, ls='--', color='black')
     return p
@@ -367,7 +387,8 @@ def compare_means(train, target, quant_var, alt_hyp='two-sided'):
     """
     x = train[train[target]==1][quant_var]
     y = train[train[target]==0][quant_var]
-    return stats.mannwhitneyu(x, y, use_continuity=True, alternative=alt_hyp)
+    stat,p = stats.mannwhitneyu(x, y, use_continuity=True, alternative=alt_hyp)
+    print("Mann-Whitney Test:\n", f'stat = {stat}, p = {p}')
 
 
 ### Multivariate
