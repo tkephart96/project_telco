@@ -13,6 +13,12 @@ from env import user, password, host
 ########## ACQUIRE & PREPARE DATA ##########
 
 def wrangle_telco_data():
+    """
+    This function reads telco customer data from a SQL database, caches it as a CSV file, cleans and
+    preps the data, and returns a pandas dataframe.
+    :return: The function `wrangle_telco_data()` returns a pandas DataFrame that has been cleaned and
+    prepped for analysis.
+    """
     filename = "telco.csv"
     # find if data is cached
     if os.path.isfile(filename):
@@ -69,20 +75,20 @@ def wrangle_telco_data():
 def split_data(df, strat, seed=42, test=.2, validate=.25):
     """
     This function splits a given dataframe into training, validation, and test sets based on a given
-    stratification column and specified test and validation sizes.
+    stratification column and specified proportions.
     
     :param df: The input dataframe that needs to be split into train, validation, and test sets
-    :param strat: The strat parameter is the name of the column in the dataframe that will be used for
+    :param strat: The strat parameter is a string representing the column name of the variable used for
     stratified sampling. Stratified sampling is a sampling technique where the population is divided
     into subgroups (strata) based on a specific characteristic, and then samples are taken from each
-    subgroup to ensure that the sample is
-    :param seed: The seed parameter is used to set the random seed for reproducibility. By setting a
-    specific seed, the same random split will be generated each time the function is run, defaults to 42
-    (optional)
+    subgroup in proportion to their size in the population
+    :param seed: The seed parameter is used to set the random seed for reproducibility of the train-test
+    split. By setting a specific seed, the same split can be obtained every time the function is run,
+    defaults to 42 (optional)
     :param test: The proportion of the data that should be allocated to the test set
     :param validate: The "validate" parameter is the proportion of the data that will be used for
     validation. It is set to 0.25, which means that 25% of the data will be used for validation
-    :return: three dataframes: train, validate, and test.
+    :return: The function `split_data` returns three dataframes: `train`, `validate`, and `test`.
     """
     # print('data split')
     st = [strat]
