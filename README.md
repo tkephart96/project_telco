@@ -76,7 +76,7 @@ My initial hypothesis is that drivers of churn will be elements that have dissat
 ### Takeaways and Key Findings
 
 * Payment type was found to be a driver of churn
-  - Electronic check being the most common among churn
+    - Electronic check being the most common among churn
 * Fiber optic internet being a driver of churn was surprising considering it has faster internet speeds
 * Paperless billing was found to be a driver of churn
     - Having it enabled was the most common among churn
@@ -85,7 +85,8 @@ My initial hypothesis is that drivers of churn will be elements that have dissat
 
 ### Recommendations
 
-* Check with engineers to see if there are frequent issues with Fiber optic internet
+* Check with the finance department to figure out if there are issues with electronic check
+* Check with internet department to see if there are frequent issues with Fiber optic internet
 * Check with tech support technicians and see what can be done for customers to choose tech support as an internet package
 
 ### Next Steps
