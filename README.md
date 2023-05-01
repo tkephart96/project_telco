@@ -81,15 +81,12 @@ My initial hypothesis is that drivers of churn will be elements that have dissat
 * Paperless billing was found to be a driver of churn
     - Having it enabled was the most common among churn
 * Monthly charges was found to be a driver of churn, higher charges for churn
-* Gender and phone service were found to not be a driver of churn
 
 ### Recommendations
 
 * Check with the finance department to figure out if there are issues with electronic check
 * Check with internet department to see if there are frequent issues with Fiber optic internet
-* Check with tech support technicians and see what can be done for customers to choose tech support as an internet package
 
 ### Next Steps
 
-* With more time I could check if not having tech support increases churn for certain internet services and packages
-* If given more time I could investigate why without making assumptions
+* Given more time I could check what is causing the high monthly charges that lead to customers churning
